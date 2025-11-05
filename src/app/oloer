@@ -1,0 +1,16 @@
+Purpose	Tailwind Class	HEX Code	Description
+Primary Blue	text-blue-400, bg-blue-500, hover:text-blue-300	#60A5FA → #3B82F6 → #93C5FD	মূল ব্র্যান্ড কালার — link, border, glow, hover effect
+Navbar Background	bg-gradient-to-r from-gray-900 via-gray-950 to-gray-900	#111827 → #0B0B0B → #111827	ডার্ক গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড (modern look)
+Border / Glow	border-blue-500/30	rgba(59,130,246,0.3)	subtle blue glow নিচের border এ
+Text (default)	text-gray-300	#D1D5DB	সাধারণ টেক্সটের জন্য হালকা ধূসর
+Cart Badge (red)	bg-red-500	#EF4444	কার্ট আইকনের notification badge রঙ
+Hover Underline	bg-blue-500	#3B82F6	লিংকের নিচে এনিমেটেড আন্ডারলাইন রঙ
+🌈 Color Summary
+
+🔵 Primary Color: Blue (#3B82F6)
+
+⚫ Background: Dark Gray Gradient (#111827 → #0B0B0B)
+
+⚪ Text: Soft Gray (#D1D5DB)
+
+🔴 Alert/Badge: Red (#EF4444)
