@@ -21,7 +21,7 @@ const CourseSection = () => {
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-950 text-white flex flex-col justify-center items-center px-4 py-16 md:py-20">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="container max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* ✅ Left Side */}
         <div className="space-y-6">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-400 leading-tight">
@@ -33,7 +33,7 @@ const CourseSection = () => {
           </p>
 
           <p className="text-blue-400 font-semibold text-lg sm:text-xl">
-            💰 Price: {course.price}৳
+             Price: {course.price}৳
           </p>
 
           {/* Buttons */}
@@ -57,7 +57,7 @@ const CourseSection = () => {
         {/* ✅ Right Side (Responsive Video Card) */}
         <div className="relative rounded-2xl overflow-hidden border border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all duration-500 transform hover:-translate-y-1 w-full">
           <iframe
-            className="w-full h-64 sm:h-72 md:h-80 lg:h-96"
+            className="w-full h-64 sm:h-72 md:h-80 lg:h-90"
             src="https://www.youtube-nocookie.com/embed/S9T4uqxVYO0?si=HuEprsLN4wXmUd6s&amp;start=4"
             title="Learn Next.js from Scratch"
             frameBorder="0"

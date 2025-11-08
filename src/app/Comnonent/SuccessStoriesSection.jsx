@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const categories = [
   {
@@ -66,10 +67,19 @@ const categories = [
 
 const SuccessStories2x2 = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const scrollRef = useRef(null);
+
+  const scrollLeft = () => {
+    scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+  };
 
   return (
     <section className="bg-gradient-to-br from-gray-900 to-gray-950 text-white px-6 py-20">
-      {/* Success Stories Text */}
+      {/* ✅ Title Section */}
       <div className="max-w-5xl mx-auto text-center space-y-6 mb-16">
         <h2 className="text-4xl md:text-5xl font-extrabold text-blue-400">
           Success Stories
@@ -77,31 +87,50 @@ const SuccessStories2x2 = () => {
         <p className="text-gray-300 text-lg leading-relaxed">
           The bright presence of our students in the marketplace inspires us and motivates us
           to engage more people with our vision to make a better future. During the last 16
-          years, hundreds of thousands of people learned and grew their expertise with us. By
-          bringing economic stability to their own life, many students created job opportunities
-          for others. We always appreciate this wonderful journey of our keen learners.
+          years, hundreds of thousands of people learned and grew their expertise with us.
         </p>
       </div>
 
-      {/* Category Tabs */}
-      <div className="flex justify-center mb-8 space-x-4 overflow-x-auto no-scrollbar">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${
-              activeCategory.id === cat.id
-                ? "bg-blue-500 text-white"
-                : "bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white"
-            }`}
-          >
-            {cat.name}
-          </button>
-        ))}
+      {/* ✅ Scrollable Category Tabs */}
+      <div className="relative flex items-center justify-center mb-10">
+        {/* Left Button */}
+        <button
+          onClick={scrollLeft}
+          className="absolute left-0 bg-gray-800/70 hover:bg-blue-600 text-white p-2 rounded-full shadow-md z-10"
+        >
+          <FaArrowLeft size={18} />
+        </button>
+
+        <div
+          ref={scrollRef}
+          className="flex space-x-4 overflow-x-scroll scroll-smooth no-scrollbar px-12 py-2"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${
+                activeCategory.id === cat.id
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white"
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Right Button */}
+        <button
+          onClick={scrollRight}
+          className="absolute right-0 bg-gray-800/70 hover:bg-blue-600 text-white p-2 rounded-full shadow-md z-10"
+        >
+          <FaArrowRight size={18} />
+        </button>
       </div>
 
-      {/* Videos 2x2 Grid */}
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+      {/* ✅ 4 Video Grid */}
+      <div className="p-5 container grid sm:grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
         {activeCategory.videos.slice(0, 4).map((video, index) => (
           <div
             key={index}

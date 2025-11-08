@@ -1,0 +1,36 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+// ✅ Async fetch
+export const fetchCourseData = createAsyncThunk(
+  "course/fetchCourseData",
+  async () => {
+    const response = await fetch("/Product.json");
+    const data = await response.json();
+    return data;
+  }
+);
+
+const CourseSlice = createSlice({
+  name: "course",
+  initialState: {
+    loading: false,
+    courseData: null,
+    error: null,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCourseData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCourseData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.courseData = action.payload;
+      })
+      .addCase(fetchCourseData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default CourseSlice.reducer;

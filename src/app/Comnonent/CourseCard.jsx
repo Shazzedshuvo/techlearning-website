@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FiShoppingCart } from "react-icons/fi";
+
+import { MdOutlineOndemandVideo } from "react-icons/md";
+import CourseSection from './../Hero/Hero';
 
 // ✅ Course Card Component
 const CourseCard = ({ course, addToCart }) => (
@@ -23,7 +25,7 @@ const CourseCard = ({ course, addToCart }) => (
       <div>
         <h4 className="text-xl font-semibold mb-2 text-blue-400">{course.title}</h4>
         <p className="text-gray-400 mb-4">{course.description}</p>
-        <p className="text-blue-300 font-semibold mb-3">💰 Price: {course.price}৳</p>
+        <p className="text-blue-300 font-semibold mb-3"> Price: Free</p>
       </div>
       <div className="flex justify-between items-center flex-wrap gap-2">
         <Link
@@ -36,7 +38,7 @@ const CourseCard = ({ course, addToCart }) => (
           onClick={() => addToCart(course)}
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition"
         >
-          <FiShoppingCart /> Add
+          <MdOutlineOndemandVideo />Vew Now
         </button>
       </div>
     </div>
@@ -99,11 +101,12 @@ const CoursesSection = () => {
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white px-4 py-20">
-      <h3 className="text-3xl font-bold mb-10 text-center text-blue-400">Popular Courses</h3>
-
+    <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-35 leading-tight">
+       Explor Our <span className="text-blue-400"> Free CourseSection </span>
+      </h1>
       {/* ✅ Grid Responsive */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {courses.map((course) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto" key={courses.id}>
+        {courses.slice(0,3).map((course) => (
           <CourseCard key={course.id} course={course} addToCart={addToCart} />
         ))}
       </div>

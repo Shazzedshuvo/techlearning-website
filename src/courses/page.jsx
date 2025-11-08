@@ -1,11 +1,10 @@
+import FiltarCourch from '@/app/Comnonent/FiltarCourch';
 import React from 'react';
 
 const page = () => {
     return (
         <div>
-
-            shuvo 
-            
+            <FiltarCourch></FiltarCourch>
         </div>
     );
 };

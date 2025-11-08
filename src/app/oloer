@@ -14,3 +14,4 @@ Hover Underline	bg-blue-500	#3B82F6	লিংকের নিচে এনিম
 ⚪ Text: Soft Gray (#D1D5DB)
 
 🔴 Alert/Badge: Red (#EF4444)
+min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 text-white 
