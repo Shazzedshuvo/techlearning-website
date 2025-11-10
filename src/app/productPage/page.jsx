@@ -1,21 +1,33 @@
- "use client";
-import React from 'react';
-import { useSelector } from 'react-redux';
-const page = () => {
+// src/app/productPage/page.jsx
+"use client";
 
-  const {productSlice} = useSelector((state) => state);
-  console.log( productSlice);
+import React from "react";
+import { useSelector } from "react-redux";
 
+const ProductPage = () => {
+  // Redux থেকে product নাও
+  const product = useSelector((state) => state.product);
+
+  if (!product) {
     return (
-        <div>
-            <h1 className='text-center text-4xl mt-7'>Product Details Page</h1>
-            <h1 className='text-black'>{productSlice.title}</h1>
-            {productSlice && <img src={productSlice.image} alt={productSlice.title} className='w-52 h-52 mx-auto mt-5'/>}
-            <h1 className='text-black w-10/12 mx-auto mt-5'>{productSlice.description}</h1>
-            <h1 className='text-black text-2xl font-bold mt-5'>${productSlice.price}</h1>       
-          
-        </div>
+      <div className="min-h-screen flex justify-center items-center bg-gray-900 text-white">
+        <p className="text-gray-400 text-lg">No product selected.</p>
+      </div>
     );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white p-10">
+      <h1 className="text-3xl font-bold mb-5">{product.title}</h1>
+      <img
+        src={product.image}
+        alt={product.title}
+        className="w-full max-w-md mx-auto mb-5 rounded-xl"
+      />
+      <p className="text-gray-300">{product.description}</p>
+      <p className="mt-3 font-bold text-blue-400">Price: ${product.price}</p>
+    </div>
+  );
 };
 
-export default page;
+export default ProductPage;
