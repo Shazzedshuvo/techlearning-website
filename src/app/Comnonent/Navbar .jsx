@@ -10,7 +10,7 @@ const Navbar = ({ cartCount = 0 }) => {
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "Courses", path: "/course" },
-    // { name: "Blog", path: "/blog" },
+    { name: "E-Books", path: "/ebook" },
     { name: "Freelancing", path: "/freelancing" },
     { name: "About", path: "/about" },
     { name: "Contact US", path: "/contact" },

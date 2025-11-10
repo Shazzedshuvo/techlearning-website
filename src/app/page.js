@@ -2,8 +2,10 @@
 
 import Campain from "./Comnonent/Campain";
 import CourseCard from "./Comnonent/CourseCard";
+import Ebook from "./Comnonent/Ebook";
 import Evant from "./Comnonent/Evant";
 import ExclusiveSolutions from "./Comnonent/ExclusiveSolutions";
+import MentorList from "./Comnonent/FiltarCourch";
 import FiltarCourch from "./Comnonent/FiltarCourch";
 import Footer from "./Comnonent/Footer";
 
@@ -26,7 +28,9 @@ export default function Home() {
   <Hero2></Hero2>
   <CourseCard></CourseCard>
   <FiltarCourch></FiltarCourch>
+<div className="h-screen"><Ebook></Ebook></div>
   <SuccessStoriesSection></SuccessStoriesSection>
+  <MentorList></MentorList>
   <Evant></Evant>
  
 <Campain></Campain>
