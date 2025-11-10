@@ -20,7 +20,7 @@ export default function Home() {
       <Hero2></Hero2>
       <CourseCard></CourseCard>
       <FiltarCourch></FiltarCourch>
-      <div className="h-screen">
+      <div>
         <Ebook></Ebook>
       </div>
       <MentorList></MentorList>
