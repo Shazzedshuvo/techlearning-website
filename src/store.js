@@ -6,6 +6,8 @@ import fatchReducer from "./app/Redux/FatchData";
 import ebookReducer from "./app/Redux/EbookSlice";
 import mentorReducer from "./app/Redux/MentorSlice"; // ✅ fixed
 
+import cartReducer from "./app/Redux/cartSlice";
+
 const store = configureStore({
   reducer: {
     product: productReducer,
@@ -13,6 +15,7 @@ const store = configureStore({
     fatch: fatchReducer,
     ebook: ebookReducer,
     mentor: mentorReducer,
+    cart: cartReducer,
   },
 });
 

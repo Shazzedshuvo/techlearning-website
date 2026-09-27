@@ -1,155 +1,143 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaQuoteLeft, FaStar, FaPlay, FaArrowRight, FaLinkedin } from "react-icons/fa";
+import { FiCheckCircle, FiTrendingUp, FiBriefcase } from "react-icons/fi";
+import VideoModal from "./VideoModal";
 
-const categories = [
-  {
-    id: 1,
-    name: "Graphics & Multimedia",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/gn_dh66cI8c?si=iEnlY1jQJB9DWO5F&start=4",
-      "https://www.youtube-nocookie.com/embed/y7hyxsjcPaY?si=mqGVe1j5f6M2ZLoq&start=4",
-      "https://www.youtube-nocookie.com/embed/vKfqca7AC3c?si=NtaoNQaPNou4Q-iy&start=4",
-      "https://www.youtube-nocookie.com/embed/S9T4uqxVYO0?si=HuEprsLN4wXmUd6s&start=4",
-    ],
-  },
-  {
-    id: 2,
-    name: "Web & Software",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/1WmNXEVia8I",
-      "https://www.youtube-nocookie.com/embed/bMknfKXIFA8",
-      "https://www.youtube-nocookie.com/embed/t4C0VvJOM1Q",
-      "https://www.youtube-nocookie.com/embed/gn_dh66cI8c",
-    ],
-  },
-  {
-    id: 3,
-    name: "Digital Marketing",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/y7hyxsjcPaY",
-      "https://www.youtube-nocookie.com/embed/vKfqca7AC3c",
-      "https://www.youtube-nocookie.com/embed/S9T4uqxVYO0",
-      "https://www.youtube-nocookie.com/embed/1WmNXEVia8I",
-    ],
-  },
-  {
-    id: 4,
-    name: "3D Animation & Visualization",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/bMknfKXIFA8",
-      "https://www.youtube-nocookie.com/embed/t4C0VvJOM1Q",
-      "https://www.youtube-nocookie.com/embed/gn_dh66cI8c",
-      "https://www.youtube-nocookie.com/embed/y7hyxsjcPaY",
-    ],
-  },
-  {
-    id: 5,
-    name: "Film & Media",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/1WmNXEVia8I",
-      "https://www.youtube-nocookie.com/embed/y7hyxsjcPaY",
-      "https://www.youtube-nocookie.com/embed/gn_dh66cI8c",
-      "https://www.youtube-nocookie.com/embed/S9T4uqxVYO0",
-    ],
-  },
-  {
-    id: 6,
-    name: "Networking & Cyber Security",
-    videos: [
-      "https://www.youtube-nocookie.com/embed/vKfqca7AC3c",
-      "https://www.youtube-nocookie.com/embed/bMknfKXIFA8",
-      "https://www.youtube-nocookie.com/embed/1WmNXEVia8I",
-      "https://www.youtube-nocookie.com/embed/t4C0VvJOM1Q",
-    ],
-  },
-];
+const SuccessStoriesSection = () => {
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-const SuccessStories2x2 = () => {
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const scrollRef = useRef(null);
-
-  const scrollLeft = () => {
-    scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
-  };
-
-  const scrollRight = () => {
-    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
-  };
+  const stories = [
+    {
+      id: 1,
+      name: "Tanvir Ahmed",
+      role: "Frontend Engineer at Brain Station 23",
+      transition: "Non-CS Background → High-Growth Tech Career",
+      salary: "৳65,000/mo Starting",
+      quote: "The project-based curriculum and 1-on-1 mentor guidance helped me build a portfolio of 4 full-stack Next.js apps. I cleared technical interviews on my first try!",
+      img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300",
+      company: "Brain Station 23",
+      videoUrl: "https://www.youtube-nocookie.com/embed/gn_dh66cI8c",
+      track: "Full-Stack Web Dev",
+    },
+    {
+      id: 2,
+      name: "Farhana Yasmin",
+      role: "Top-Rated UI/UX Freelancer on Upwork",
+      transition: "Student → $3,500+/month Freelancer",
+      salary: "$40/hour Contract Rate",
+      quote: "TechLearning didn't just teach me Figma; they taught me client acquisition, design systems, and international freelance negotiation. I reached Top Rated status in 6 months.",
+      img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300",
+      company: "Upwork & Remote",
+      videoUrl: "https://www.youtube-nocookie.com/embed/y7hyxsjcPaY",
+      track: "UI/UX & Product Design",
+    },
+    {
+      id: 3,
+      name: "Shakil Mahmud",
+      role: "Backend Node.js Developer at Pathao",
+      transition: "Career Shift → Production API Specialist",
+      salary: "৳80,000/mo Package",
+      quote: "The deep dive into MongoDB indexing, microservices, and Docker at TechLearning made me confident with large-scale backend systems.",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300",
+      company: "Pathao",
+      videoUrl: "https://www.youtube-nocookie.com/embed/vKfqca7AC3c",
+      track: "MERN Stack Engineering",
+    },
+  ];
 
   return (
-    <section className="bg-gradient-to-br from-gray-900 to-gray-950 text-white px-6 py-20">
-      {/* ✅ Title Section */}
-      <div className="max-w-5xl mx-auto text-center space-y-6 mb-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-blue-400">
-          Success Stories
-        </h2>
-        <p className="text-gray-300 text-lg leading-relaxed">
-          The bright presence of our students in the marketplace inspires us and motivates us
-          to engage more people with our vision to make a better future. During the last 16
-          years, hundreds of thousands of people learned and grew their expertise with us.
-        </p>
-      </div>
+    <section className="py-20 md:py-28 bg-[#07090e] border-b border-indigo-500/10 relative overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[400px] bg-emerald-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* ✅ Scrollable Category Tabs */}
-      <div className="relative flex items-center justify-center mb-10">
-        {/* Left Button */}
-        <button
-          onClick={scrollLeft}
-          className="absolute left-0 bg-gray-800/70 hover:bg-blue-600 text-white p-2 rounded-full shadow-md z-10"
-        >
-          <FaArrowLeft size={18} />
-        </button>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            Real Proof & Career Outcomes
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+            Stories From Our <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">Graduates</span>
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            See how individuals from diverse academic backgrounds transitioned into high-paying engineering and freelancing careers.
+          </p>
+        </div>
 
-        <div
-          ref={scrollRef}
-          className="flex space-x-4 overflow-x-scroll scroll-smooth no-scrollbar px-12 py-2"
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-2 rounded-full font-semibold transition whitespace-nowrap ${
-                activeCategory.id === cat.id
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white"
-              }`}
+        {/* Stories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {stories.map((story) => (
+            <div
+              key={story.id}
+              className="rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 p-6 flex flex-col justify-between group hover:-translate-y-1"
             >
-              {cat.name}
-            </button>
+              <div>
+                {/* Top Badge & Company */}
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1">
+                    <FiTrendingUp /> {story.salary}
+                  </span>
+                  <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
+                    <FiBriefcase className="text-cyan-400" /> {story.company}
+                  </span>
+                </div>
+
+                {/* Transition Highlight */}
+                <div className="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800 mb-4 text-xs font-semibold text-indigo-300 flex items-center gap-1.5">
+                  <FiCheckCircle className="text-emerald-400 flex-shrink-0" />
+                  <span>{story.transition}</span>
+                </div>
+
+                {/* Quote */}
+                <p className="text-xs text-slate-300 italic leading-relaxed mb-6">
+                  “{story.quote}”
+                </p>
+              </div>
+
+              {/* Student Profile & Video Watch */}
+              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={story.img}
+                    alt={story.name}
+                    className="w-10 h-10 rounded-full object-cover border border-slate-700"
+                  />
+                  <div>
+                    <h4 className="text-sm font-bold text-white leading-tight">{story.name}</h4>
+                    <p className="text-[11px] text-slate-400">{story.role}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setSelectedVideo(story)}
+                  className="p-2.5 rounded-xl bg-slate-800 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-slate-700 transition"
+                  title="Watch Video Story"
+                >
+                  <FaPlay className="text-xs ml-0.5" />
+                </button>
+              </div>
+
+            </div>
           ))}
         </div>
 
-        {/* Right Button */}
-        <button
-          onClick={scrollRight}
-          className="absolute right-0 bg-gray-800/70 hover:bg-blue-600 text-white p-2 rounded-full shadow-md z-10"
-        >
-          <FaArrowRight size={18} />
-        </button>
       </div>
 
-      {/* ✅ 4 Video Grid */}
-      <div className="p-5 container grid sm:grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-        {activeCategory.videos.slice(0, 4).map((video, index) => (
-          <div
-            key={index}
-            className="rounded-2xl overflow-hidden border border-gray-700 shadow-lg hover:shadow-[0_0_35px_rgba(59,130,246,0.4)] transition-all transform hover:-translate-y-1"
-          >
-            <iframe
-              className="w-full h-64 md:h-72 lg:h-80"
-              src={video}
-              title={`Video ${index + 1} - ${activeCategory.name}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ))}
-      </div>
+      {/* Video Modal */}
+      {selectedVideo && (
+        <VideoModal
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoUrl={selectedVideo.videoUrl}
+          title={`${selectedVideo.name} — Career Transformation Story`}
+          description={`Watch how ${selectedVideo.name} secured their role at ${selectedVideo.company} after graduating from TechLearning.`}
+        />
+      )}
     </section>
   );
 };
 
-export default SuccessStories2x2;
+export default SuccessStoriesSection;

@@ -2,232 +2,280 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEbookData } from "../Redux/EbookSlice";
+import { addToCart } from "../Redux/cartSlice";
 import {
   FaStar,
   FaDownload,
   FaBookOpen,
   FaTimes,
   FaSearch,
-  FaTags,
-  FaChevronDown,
-  FaChevronUp,
+  FaFilePdf,
+  FaFigma,
 } from "react-icons/fa";
+import { FiDownload, FiEye, FiCheck, FiShoppingCart, FiClock, FiFileText } from "react-icons/fi";
 
 const Ebook = () => {
   const dispatch = useDispatch();
-  const { loading, ebookData, error } = useSelector(
-    (state) => state.ebook ?? {}
-  );
+  const { loading, ebookData, error } = useSelector((state) => state.ebook ?? {});
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(4);
-  const [showAll, setShowAll] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchEbookData());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <div className="text-center text-blue-400 text-lg mt-10">Loading...</div>
-    );
-  if (error)
-    return <div className="text-center text-red-400 mt-10">Error: {error}</div>;
-  if (!ebookData || ebookData.length === 0)
-    return (
-      <div className="text-center text-gray-400 mt-10">No eBooks found.</div>
-    );
+  const handleDownload = (book) => {
+    setIsDownloading(true);
+    setDownloadProgress(20);
+    setTimeout(() => setDownloadProgress(60), 400);
+    setTimeout(() => {
+      setDownloadProgress(100);
+      setTimeout(() => {
+        setIsDownloading(false);
+        setDownloadProgress(0);
+        alert(`Downloading "${book.title}" in ${book.format || "PDF"} format!`);
+      }, 300);
+    }, 800);
+  };
 
-  // Dynamic categories
-  const categories = [
-    "All",
-    ...new Set(ebookData.map((b) => b.category).filter(Boolean)),
-  ];
+  if (loading) {
+    return (
+      <div className="py-24 text-center">
+        <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+        <p className="text-slate-400 text-sm">Loading eBooks & cheat sheets...</p>
+      </div>
+    );
+  }
 
-  // Filter books
+  if (error || !ebookData || ebookData.length === 0) {
+    return null;
+  }
+
+  const types = ["All", ...new Set(ebookData.map((b) => b.type || b.category).filter(Boolean))];
+
   const filteredBooks = ebookData.filter((b) => {
     const matchesCategory =
-      selectedCategory === "All" || b.category === selectedCategory;
-    const matchesSearch = b.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+      selectedCategory === "All" || b.type === selectedCategory || b.category === selectedCategory;
+    const matchesSearch =
+      b.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (b.description && b.description.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
-  // Visible books
-  const visibleBooks = showAll
-    ? filteredBooks
-    : filteredBooks.slice(0, visibleCount);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 text-gray-300 px-6 py-16">
-      {/* Header */}
-      <div className="text-center mb-10">
-        <h1 className="flex justify-center items-center gap-3 text-4xl md:text-5xl font-extrabold text-blue-400 mb-3">
-          <FaBookOpen className="text-white" />
-          Explore Our <span className="text-white">eBooks</span>
-        </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Discover premium design resources, templates, and guides.
-        </p>
-      </div>
+    <section id="ebooks" className="py-20 md:py-28 bg-[#07090e] border-b border-indigo-500/10 relative overflow-hidden">
+      
+      {/* Background Accent */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Search + Filter */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10 max-w-5xl mx-auto">
-        {/* Search */}
-        <div className="relative w-full md:w-1/2">
-          <FaSearch className="absolute left-3 top-3 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search eBooks..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-gray-800 border border-blue-500/30 rounded-full py-2.5 pl-10 pr-4 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-          />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-violet-500/10 text-violet-400 border border-violet-500/20">
+            Free & Premium Developer Resources
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+            E-Books, Cheat Sheets & <span className="bg-gradient-to-r from-violet-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">Templates</span>
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            Accelerate your coding efficiency with hand-crafted cheat sheets, React design kits, and engineering handbooks.
+          </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm transition-all ${
-                selectedCategory === cat
-                  ? "bg-blue-500 text-white border-blue-500"
-                  : "border-blue-500/40 text-blue-400 hover:bg-blue-500/10"
-              }`}
-            >
-              <FaTags /> {cat}
-            </button>
-          ))}
-        </div>
-      </div>
+        {/* Filter Bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+            {types.map((t) => (
+              <button
+                key={t}
+                onClick={() => setSelectedCategory(t)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition ${
+                  selectedCategory === t
+                    ? "bg-violet-600 text-white shadow-lg shadow-violet-600/30"
+                    : "bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
 
-      {/* Books Grid */}
-      {filteredBooks.length === 0 ? (
-        <p className="text-center text-gray-400">No eBooks found.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {visibleBooks.map((book) => (
+          {/* Search Input */}
+          <div className="relative w-full sm:w-72">
+            <FaSearch className="absolute left-3.5 top-3.5 text-slate-500 text-xs" />
+            <input
+              type="text"
+              placeholder="Search resource..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700/80 rounded-xl py-2 pl-9 pr-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-violet-500"
+            />
+          </div>
+        </div>
+
+        {/* E-Books Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredBooks.slice(0, 8).map((book) => (
             <div
               key={book.id}
               onClick={() => setSelectedBook(book)}
-              className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950 border border-blue-500/30 rounded-xl p-5 shadow-md hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] cursor-pointer transition-all duration-300 hover:-translate-y-1"
+              className="rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer group hover:-translate-y-1"
             >
-              <img
-                src={book.img}
-                alt={book.title}
-                className="w-full h-56 object-cover rounded-lg mb-4"
-              />
-              <h3 className="text-lg font-semibold text-white mb-1 truncate">
-                {book.title}
-              </h3>
-              <p className="text-sm text-gray-400 mb-2 truncate">
-                {book.special}
-              </p>
-              <div className="flex justify-between text-sm text-gray-300">
-                <span className="flex items-center gap-1 text-yellow-400">
-                  <FaStar /> {book.rating}
-                </span>
-                <span className="flex items-center gap-1 text-blue-400">
-                  <FaDownload /> {book.downloads}
-                </span>
+              <div>
+                {/* Book Thumbnail */}
+                <div className="relative aspect-[3/4] overflow-hidden bg-slate-950">
+                  <img
+                    src={book.img}
+                    alt={book.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-black/80 backdrop-blur-md text-violet-300 border border-violet-500/30">
+                    {book.type || "E-Book"}
+                  </span>
+                  {book.special && (
+                    <span className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      {book.special}
+                    </span>
+                  )}
+                </div>
+
+                {/* Details */}
+                <div className="p-5 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <FiFileText className="text-violet-400" /> {book.format || "PDF"}
+                    </span>
+                    <span className="flex items-center gap-1 text-amber-400 font-semibold">
+                      <FaStar /> {book.rating || 4.9}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-bold text-white group-hover:text-violet-300 transition line-clamp-2 leading-snug">
+                    {book.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    {book.description}
+                  </p>
+                </div>
               </div>
-              <div className="mt-3 flex justify-between items-center">
-                <span className="text-blue-400 font-semibold">
-                  ৳{book.offerPrice ?? book.price}
-                </span>
-                <button className="text-xs bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-full transition">
-                  View Details
+
+              {/* Price & Action */}
+              <div className="p-5 pt-3 border-t border-slate-800/70 flex items-center justify-between mt-auto">
+                <div>
+                  <div className="text-sm font-black text-violet-400">
+                    {book.offerPrice ? `৳${book.offerPrice}` : "Free"}
+                  </div>
+                  {book.price && book.offerPrice && (
+                    <span className="text-[10px] text-slate-500 line-through">
+                      ৳{book.price}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (book.offerPrice) {
+                      dispatch(addToCart(book));
+                    } else {
+                      handleDownload(book);
+                    }
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-semibold text-xs transition shadow-md shadow-violet-600/20 flex items-center gap-1.5 active:scale-95"
+                >
+                  {book.offerPrice ? (
+                    <><FiShoppingCart className="text-xs" /> Buy</>
+                  ) : (
+                    <><FiDownload className="text-xs" /> Get Free</>
+                  )}
                 </button>
               </div>
+
             </div>
           ))}
         </div>
-      )}
 
-      {/* Show More / Show Less */}
-      {filteredBooks.length > visibleCount && (
-        <div className="text-center mt-10">
-          {!showAll ? (
-            <button
-              onClick={() => setShowAll(true)}
-              className="flex items-center justify-center gap-2 mx-auto px-6 py-2 rounded-full border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white transition-all"
-            >
-              Show More <FaChevronDown />
-            </button>
-          ) : (
-            <button
-              onClick={() => setShowAll(false)}
-              className="flex items-center justify-center gap-2 mx-auto px-6 py-2 rounded-full border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white transition-all"
-            >
-              Show Less <FaChevronUp />
-            </button>
-          )}
-        </div>
-      )}
+      </div>
 
-      {/* Modal for Details */}
+      {/* Book Preview Modal */}
       {selectedBook && (
-        <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 px-4">
-          <div className="bg-gray-900 border border-blue-500/40 rounded-2xl max-w-lg w-full p-6 relative shadow-2xl text-gray-300">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex justify-center items-center z-50 p-4">
+          <div className="bg-[#0e1322] border border-violet-500/30 rounded-2xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl text-slate-200">
             <button
               onClick={() => setSelectedBook(null)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
             >
               <FaTimes />
             </button>
 
-            <img
-              src={selectedBook.img}
-              alt={selectedBook.title}
-              className="w-full h-64 object-cover rounded-lg mb-5"
-            />
+            <div className="flex gap-4 mb-6">
+              <img
+                src={selectedBook.img}
+                alt={selectedBook.title}
+                className="w-24 h-32 object-cover rounded-lg border border-slate-800 flex-shrink-0"
+              />
+              <div className="space-y-1">
+                <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold bg-violet-500/10 text-violet-400 border border-violet-500/20">
+                  {selectedBook.type || "Resource"}
+                </span>
+                <h3 className="text-lg font-bold text-white leading-snug">{selectedBook.title}</h3>
+                <p className="text-xs text-slate-400">Format: {selectedBook.format || "PDF"}</p>
+                <div className="text-sm font-bold text-violet-400 mt-2">
+                  {selectedBook.offerPrice ? `Price: ৳${selectedBook.offerPrice}` : "Free Community Access"}
+                </div>
+              </div>
+            </div>
 
-            <h2 className="text-2xl font-bold text-white mb-2">
-              {selectedBook.title}
-            </h2>
-            <p className="text-blue-400 mb-3">{selectedBook.category}</p>
-            <p className="text-gray-400 text-sm mb-3">
+            <p className="text-xs text-slate-300 leading-relaxed mb-6">
               {selectedBook.description}
             </p>
 
-            <ul className="mb-4 list-disc list-inside text-gray-300 text-sm">
-              {selectedBook.includes?.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-
-            <div className="flex justify-between items-center">
-              <div>
-                <span className="text-yellow-400 flex items-center gap-1">
-                  <FaStar /> {selectedBook.rating}
-                </span>
-                <span className="block text-gray-400 text-sm">
-                  Downloads: {selectedBook.downloads}
-                </span>
+            {isDownloading && (
+              <div className="mb-6 space-y-1">
+                <div className="flex justify-between text-xs text-slate-400">
+                  <span>Downloading resource...</span>
+                  <span>{downloadProgress}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-violet-500 transition-all duration-300"
+                    style={{ width: `${downloadProgress}%` }}
+                  />
+                </div>
               </div>
+            )}
 
-              <div className="text-right">
-                <p className="text-lg text-blue-400 font-bold">
-                  ৳{selectedBook.offerPrice ?? selectedBook.price}
-                </p>
-                <a
-                  href={selectedBook.link}
-                  target="_blank"
-                  className="mt-2 inline-block bg-blue-500 hover:bg-blue-400 text-white px-4 py-1.5 rounded-full text-sm transition"
+            <div className="flex gap-3">
+              <button
+                onClick={() => handleDownload(selectedBook)}
+                disabled={isDownloading}
+                className="flex-1 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-xs transition shadow-lg shadow-violet-600/25 flex items-center justify-center gap-2"
+              >
+                <FiDownload /> Download Resource
+              </button>
+              {selectedBook.offerPrice && (
+                <button
+                  onClick={() => {
+                    dispatch(addToCart(selectedBook));
+                    setSelectedBook(null);
+                  }}
+                  className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition flex items-center gap-2"
                 >
-                  Download Now
-                </a>
-              </div>
+                  <FiShoppingCart /> Add to Cart
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

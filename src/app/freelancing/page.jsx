@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import {
   FaGlobe,
   FaUserFriends,
@@ -10,217 +11,149 @@ import {
   FaGraduationCap,
   FaRocket,
   FaChalkboardTeacher,
-  FaHandHoldingHeart,
   FaAward,
   FaBriefcase,
-  FaBuilding,
+  FaCheckCircle,
 } from "react-icons/fa";
+import { FiArrowRight, FiShield, FiDollarSign, FiClock, FiStar } from "react-icons/fi";
 
 const FreelancingPage = () => {
   const marketplaces = [
-    "Upwork",
-    "Fiverr",
-    "Freelancer",
-    "Toptal",
-    "PeoplePerHour",
-    "Guru",
-    "99Designs",
-    "Truelancer",
-    "SimplyHired",
-    "+9 More",
+    { name: "Upwork", tag: "Enterprise Contracts", color: "text-emerald-400 border-emerald-500/30" },
+    { name: "Fiverr Pro", tag: "Gig Marketplace", color: "text-green-400 border-green-500/30" },
+    { name: "Toptal", tag: "Top 3% Global Talent", color: "text-blue-400 border-blue-500/30" },
+    { name: "RemoteOK", tag: "Remote Tech Jobs", color: "text-cyan-400 border-cyan-500/30" },
+    { name: "Freelancer.com", tag: "Competitive Bidding", color: "text-sky-400 border-sky-500/30" },
+    { name: "99designs", tag: "Creative Contests", color: "text-pink-400 border-pink-500/30" },
+  ];
+
+  const pillars = [
+    {
+      title: "100% Profile Approval Support",
+      description: "Our mentors personally guide you through ID verification, profile description copywriting, and portfolio uploads to get accepted quickly.",
+      icon: <FiShield className="text-2xl text-emerald-400" />,
+    },
+    {
+      title: "Proposal Writing & Bidding Formula",
+      description: "Learn our proprietary cover letter frameworks that win contracts with high-paying clients in the US, UK, and European markets.",
+      icon: <FaChartLine className="text-2xl text-cyan-400" />,
+    },
+    {
+      title: "Client Communication & Negotiation",
+      description: "Master client calls, milestone-based pricing, and client retention tactics to turn one-time buyers into recurring monthly retainers.",
+      icon: <FaUsers className="text-2xl text-indigo-400" />,
+    },
+    {
+      title: "Direct Payment & Tax Setup",
+      description: "Guidance on connecting Bank Asia, Payoneer, and local bank transfers safely with zero hassle and government incentive bonuses.",
+      icon: <FiDollarSign className="text-2xl text-amber-400" />,
+    },
   ];
 
   const stats = [
-    { icon: <FaGraduationCap />, value: "90,000+", label: "Successful Students" },
-    { icon: <FaUserTie />, value: "34,000+", label: "Expert Freelancers" },
-    { icon: <FaBriefcase />, value: "42,000+", label: "Skilled Job Holders" },
-    { icon: <FaUsers />, value: "600+", label: "Industry Experts" },
-    { icon: <FaChartLine />, value: "89%", label: "Success Ratio" },
-    { icon: <FaGlobe />, value: "3,000+", label: "Companies" },
-  ];
-
-  const whoCan = [
-    { icon: <FaUserFriends />, title: "Homemakers" },
-    { icon: <FaBriefcase />, title: "Job Seekers" },
-    { icon: <FaRocket />, title: "Entrepreneurs" },
-    { icon: <FaGraduationCap />, title: "Students" },
-    { icon: <FaGlobe />, title: "Immigrants" },
-    { icon: <FaLaptopCode />, title: "Anyone Interested in Freelancing" },
-  ];
-
-  const initiatives = [
-    { icon: <FaChalkboardTeacher />, value: "1,000,000+", label: "Students received career counseling" },
-    { icon: <FaHandHoldingHeart />, value: "6,000+", label: "Women got IT training (Free Scholarship)" },
-    { icon: <FaRocket />, value: "5,000+", label: "Students got online internship facility" },
-    { icon: <FaAward />, value: "200+", label: "Physically challenged people trained" },
-    { icon: <FaHandHoldingHeart />, value: "12,000+", label: "Financially deprived got scholarships" },
-    { icon: <FaUsers />, value: "500+", label: "Polytechnics attached for training" },
-    { icon: <FaGraduationCap />, value: "6,000+", label: "Senior citizens got scholarships" },
-    { icon: <FaChartLine />, value: "45+", label: "Trendy courses for professional training" },
-  ];
-
-  const courses = [
-    "Graphic & Multimedia",
-    "Web & Software",
-    "Digital Marketing",
-    "3D Animation & Visualization",
-    "Film & Media",
-    "1 Year Diploma Programs",
-    "Networking & Cyber Security",
+    { value: "34,000+", label: "Active Freelancers Mentored" },
+    { value: "$4.8M+", label: "Total Student Earnings" },
+    { value: "89%", label: "First Contract Rate Within 90 Days" },
+    { value: "4.9 / 5.0", label: "Mentor Guidance Rating" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-gray-300 px-6 py-12">
+    <div className="bg-[#07090e] text-slate-200 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 radial-glow-hero pointer-events-none" />
+
       {/* HEADER */}
-      <section className="max-w-6xl mx-auto text-center mb-16">
-        <h1 className="text-5xl font-extrabold text-blue-400 mb-4">
-          Freelancing
+      <section className="max-w-4xl mx-auto text-center mb-20 space-y-4 relative z-10">
+        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          Career Freedom
+        </span>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+          Launch a High-Earning <br />
+          <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+            Global Freelancing Career
+          </span>
         </h1>
-        <p className="text-gray-400 leading-relaxed text-lg">
-          According to a survey done by Bangladesh ICT Division, more than 6
-          lakh freelancers are currently working in the global marketplace. It
-          has become a trendy source of income, helping thousands gain financial
-          stability through independent work. Over 1 billion people globally
-          have entered freelancing by mastering their technical skills. We offer
-          more than 30 demanding courses to help you build your freelancing
-          career.
+        <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          Break free from location boundaries. We combine specialized coding & design training with dedicated international freelancing mentorship to help you win global clients.
         </p>
-      </section>
-      <div>
-         <div className="relative rounded-2xl overflow-hidden border border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all duration-500 transform hover:-translate-y-1 w-160 items-center mx-auto p-2 m-10">
-          <iframe
-            className="w-full h-64 sm:h-72 md:h-80 lg:h-90"
-            src="https://www.youtube-nocookie.com/embed/S9T4uqxVYO0?si=HuEprsLN4wXmUd6s&amp;start=4"
-            title="Learn Next.js from Scratch"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
-
-          <div className="p-5 bg-gray-900/70 backdrop-blur-md border-t border-gray-700">
-            <h4 className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-400 mb-2">
-              Learn <span className="text-white">Next.js</span> from Scratch
-            </h4>
-            <p className="text-gray-400 text-sm sm:text-base mb-2">
-              lorem....
-            </p>
-            <p className="text-blue-300 font-semibold text-base sm:text-lg">
-             
-            </p>
-          </div>
-        </div></div>
-
-      {/* MARKETPLACES */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-          <FaGlobe className="text-blue-400 text-3xl" />
-          Available Workplaces
-        </h2>
-        <p className="text-gray-400 mb-6">
-          Freelancing is a great option if you prefer an independent career.
-          Marketplaces offer thousands of jobs daily — all you need is the
-          skill!
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {marketplaces.map((market, i) => (
-            <div
-              key={i}
-              className="bg-blue-900/20 border border-blue-800 text-blue-300 font-semibold py-3 rounded-xl text-center hover:scale-105 hover:bg-blue-800/30 transition-all duration-300"
-            >
-              {market}
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* STATS */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-          <FaChartLine className="text-green-400 text-3xl" />
-          Our Achievements
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-          {stats.map((s, i) => (
+      <section className="max-w-6xl mx-auto mb-20 grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10 text-center">
+        {stats.map((s, idx) => (
+          <div key={idx} className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <div className="text-2xl sm:text-3xl font-black text-white">{s.value}</div>
+            <div className="text-xs text-slate-400 mt-1 font-medium">{s.label}</div>
+          </div>
+        ))}
+      </section>
+
+      {/* MARKETPLACES */}
+      <section className="max-w-6xl mx-auto mb-20 relative z-10">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">Target Verified Global Marketplaces</h2>
+          <p className="text-xs sm:text-sm text-slate-400">
+            We guide you in building top-rated profiles across leading platforms tailored to your specific skill set.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {marketplaces.map((m, i) => (
             <div
               key={i}
-              className="bg-gray-800/40 rounded-xl p-6 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col items-center justify-center text-center group hover:-translate-y-1"
             >
-              <div className="text-3xl mb-3 text-blue-400 mx-auto">{s.icon}</div>
-              <h3 className="text-2xl font-bold text-white">{s.value}</h3>
-              <p className="text-gray-400 text-sm mt-2">{s.label}</p>
+              <h4 className="text-base font-bold text-white group-hover:text-emerald-400 transition mb-1">
+                {m.name}
+              </h4>
+              <span className="text-[10px] text-slate-400">{m.tag}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* WHO CAN DO FREELANCING */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-          <FaUserFriends className="text-yellow-400 text-3xl" />
-          Who Can Do Freelancing?
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          {whoCan.map((item, i) => (
+      {/* 4 CORE FREELANCING PILLARS */}
+      <section className="max-w-6xl mx-auto mb-20 relative z-10">
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">How TechLearning Prepares You to Win</h2>
+          <p className="text-xs sm:text-sm text-slate-400">
+            Freelancing requires more than just technical skills. We teach the entire business and communication pipeline.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {pillars.map((p, idx) => (
             <div
-              key={i}
-              className="bg-gray-800/40 p-6 rounded-xl text-center shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              key={idx}
+              className="p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/30 transition-all duration-300 flex gap-5 items-start"
             >
-              <div className="text-4xl mb-3 text-blue-400">{item.icon}</div>
-              <h3 className="text-lg font-semibold">{item.title}</h3>
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex-shrink-0">
+                {p.icon}
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base font-bold text-white">{p.title}</h3>
+                <p className="text-xs text-slate-400 leading-relaxed font-normal">{p.description}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* INITIATIVES */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-          <FaRocket className="text-pink-400 text-3xl" />
-          Our Initiatives on Freelancing
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {initiatives.map((item, i) => (
-            <div
-              key={i}
-              className="bg-gray-800/40 p-6 rounded-xl text-center hover:shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              <div className="text-3xl mb-3 text-blue-400">{item.icon}</div>
-              <h3 className="text-2xl font-bold text-white">{item.value}</h3>
-              <p className="text-gray-400 text-sm mt-2">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* POPULAR COURSES */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-          <FaLaptopCode className="text-cyan-400 text-3xl" />
-          Our Popular Courses
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {courses.map((course, i) => (
-            <div
-              key={i}
-              className="bg-blue-900/20 border border-blue-800 text-blue-300 font-semibold py-4 rounded-xl text-center hover:bg-blue-800/40 hover:scale-105 transition-all duration-300"
-            >
-              {course}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* INFRASTRUCTURE */}
-      <section className="max-w-6xl mx-auto mb-16 text-center">
-        <h2 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
-          <FaBuilding className="text-blue-400 text-3xl" />
-          Our Infrastructure
-        </h2>
-        <p className="text-gray-400">
-          We take pride in our top-rated freelancers, modern labs, professional mentors, and career-focused training environment that builds global freelancers every year.
+      {/* BOTTOM CTA */}
+      <section className="max-w-4xl mx-auto text-center p-10 rounded-2xl bg-slate-900/70 border border-slate-800 relative z-10 space-y-4">
+        <h3 className="text-2xl font-bold text-white">Ready to Start Earning Independently?</h3>
+        <p className="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
+          Enroll in our career programs. Every tech course includes the comprehensive Freelance Career Masterclass module.
         </p>
+        <Link
+          href="/course"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-slate-950 font-bold text-sm shadow-xl shadow-emerald-500/20 transition"
+        >
+          Browse Courses with Freelance Module <FiArrowRight />
+        </Link>
       </section>
+
     </div>
   );
 };
